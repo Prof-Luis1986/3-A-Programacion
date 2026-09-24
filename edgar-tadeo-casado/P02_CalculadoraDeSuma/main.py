@@ -1,53 +1,49 @@
-from nicegui import ui
+import nicegui
+
 
 def sumar():
     try:
-        resultado.text = (
-            f'Resultado: '
-            f'{float(numero1.value) + float(numero2.value)}'
-        )
-    except:
+        n1 = float(numero1.value)
+        n2 = float(numero2.value)
+        total = n1 + n2
+        resultado.text = f'Resultado: {total:g}'
+    except (TypeError, ValueError):
         resultado.text = 'Ingresa números válidos'
+
 
 def limpiar():
     numero1.value = ''
     numero2.value = ''
     resultado.text = 'Resultado: 0'
 
-with ui.column().classes(
+
+with nicegui.ui.column().classes(
     'w-full h-screen items-center justify-center'
 ):
-    with ui.card().style(
+    with nicegui.ui.card().style(
         'width:400px; background-color:purple;'
     ).classes('items-center'):
 
-        ui.label(
+        nicegui.ui.label(
             'Calculadora de Suma'
         ).style(
             'color:white; font-size:24px; font-weight:bold'
         )
-        numero1 = ui.input('Número 1').props(
+
+        numero1 = nicegui.ui.input('Número 1').props(
             'dark outlined'
         ).style('width:300px')
 
-        numero2 = ui.input('Número 2').props(
+        numero2 = nicegui.ui.input('Número 2').props(
             'dark outlined'
         ).style('width:300px')
 
-        with ui.row().classes(
-            'w-full justify-center no-wrap'
-        ).style('gap:16px'):
-            ui.button(
-                'SUMAR', icon='calculate',
-                color='green', on_click=sumar
-            ).style('color:white; width:140px')
-            ui.button(
-                'LIMPIAR', icon='delete',
-                color='red', on_click=limpiar
-            ).style('color:white; width:140px')
+        with nicegui.ui.row():
+            nicegui.ui.button('Sumar', on_click=sumar).props('color=green')
+            nicegui.ui.button('Limpiar', on_click=limpiar).props('color=red')
 
-        resultado = ui.label(
-            'Resultado: 0'
-        ).style('color:white; font-size:20px')
+        resultado = nicegui.ui.label('Resultado: 0').style(
+            'color:white; font-size:20px'
+        )
 
-ui.run()
+nicegui.ui.run()
