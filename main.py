@@ -1,3 +1,4 @@
+import os
 from nicegui import ui
 
 def sumar():
@@ -66,4 +67,5 @@ with ui.column().classes(
             'color:white; font-size:20px'
         )
 
-ui.run()
+port = int(os.environ.get("PORT", 8080))
+ui.run(host="0.0.0.0", port=port, reload=False)
